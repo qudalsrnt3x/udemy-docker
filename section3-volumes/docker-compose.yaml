@@ -1,0 +1,13 @@
+services:
+  app:
+    build:
+      context: .
+    image: feedback-node
+    container_name: feedback-app
+    ports:
+      - '3000:80'
+    volumes:
+      - feedback:/app/feedback
+
+volumes:
+  feedback:
