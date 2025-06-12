@@ -5,12 +5,14 @@ services:
     image: feedback-node
     container_name: feedback-app
     ports:
-      - '3000:80'
+      - '${PORT}:${PORT}'
     volumes:
       - feedback:/app/feedback # Named volume
       - .:/app # Bind mount, 호스트의 현재 디렉토리가 컨테이너의 /app 디랙토리를 통째로 덮어씌운다.
       - /app/node_modules # Anonymous volume, 바인드 마운트가 컨테이너 내부의 node_modules를 덮어써버리는 문제 방지
         # 더 구체적인 경로에 대해 우선적으로 마운트를 적용
+    env_file:
+      - .env
 
 volumes:
   feedback:
