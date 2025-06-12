@@ -1,0 +1,25 @@
+services:
+  favorites-app:
+    container_name: favorites-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+      tags:
+        - favorites-node:latest
+    ports:
+      - '3000:3000'
+    restart: unless-stopped
+    networks:
+      - favorites-network
+  mongodb:
+    container_name: mongodb
+    image: mongo:latest
+    ports:
+      - '27017:27017'
+    restart: unless-stopped
+    networks:
+      - favorites-network
+
+networks:
+  favorites-network:
+    driver: bridge
