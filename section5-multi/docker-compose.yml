@@ -1,0 +1,14 @@
+services:
+  goals-node:
+    container_name: goals-backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - '80:80'
+  mongodb:
+    container_name: mongodb
+    image: mongo:latest
+    ports:
+      - '27017:27017'
+    restart: unless-stopped
