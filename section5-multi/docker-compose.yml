@@ -1,4 +1,10 @@
 services:
+  mongodb:
+    container_name: mongodb
+    image: mongo:latest
+    ports:
+      - '27017:27017'
+    restart: unless-stopped
   goals-node:
     container_name: goals-backend
     build:
@@ -6,9 +12,16 @@ services:
       dockerfile: Dockerfile
     ports:
       - '80:80'
-  mongodb:
-    container_name: mongodb
-    image: mongo:latest
+    depends_on:
+      - mongodb
+  goals-react:
+    container_name: goals-frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
     ports:
-      - '27017:27017'
-    restart: unless-stopped
+      - '3000:3000'
+    stdin_open: true
+    tty: true
+    depends_on:
+      - goals-node
