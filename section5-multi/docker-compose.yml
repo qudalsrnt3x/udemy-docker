@@ -2,9 +2,14 @@ services:
   mongodb:
     container_name: mongodb
     image: mongo:latest
-    ports:
-      - '27017:27017'
     restart: unless-stopped
+    volumes:
+      - 'data:/data/db'
+    environment:
+      - 'MONGO_INITDB_ROOT_USERNAME=moon'
+      - 'MONGO_INITDB_ROOT_PASSWORD=secret'
+    networks:
+      - goals-net
   goals-node:
     container_name: goals-backend
     build:
@@ -14,6 +19,8 @@ services:
       - '80:80'
     depends_on:
       - mongodb
+    networks:
+      - goals-net
   goals-react:
     container_name: goals-frontend
     build:
@@ -25,3 +32,11 @@ services:
     tty: true
     depends_on:
       - goals-node
+    networks:
+      - goals-net
+
+networks:
+  goals-net:
+
+volumes:
+  data:
