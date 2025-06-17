@@ -37,6 +37,8 @@ services:
       - '3000:3000'
     stdin_open: true
     tty: true
+    volumes:
+      - ./frontend/src:/app/src
     depends_on:
       - goals-node
     networks:
